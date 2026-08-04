@@ -1,0 +1,45 @@
+---
+import "../styles/global.css";
+const { title = "Portfolio" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <!-- Logo et menu hamburger en position fixed -->
+    <div class="logo-fixed">CLEMENT LOYER</div>
+
+    <button class="menu-toggle-fixed" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Menu de navigation (overlay) -->
+    <nav class="dropdown-menu">
+      <a href="/">Home</a>
+      <a href="/projects">Projects</a>
+      <a href="/contact">Contact</a>
+    </nav>
+
+    <!-- Contenu de la page -->
+    <main class="content">
+      <slot />
+    </main>
+  </body>
+</html>
+
+<script>
+  const toggle = document.querySelector(".menu-toggle-fixed");
+  const menu = document.querySelector(".dropdown-menu");
+
+  toggle?.addEventListener("click", () => {
+    menu?.classList.toggle("open");
+    toggle?.classList.toggle("active");
+  });
+</script>
