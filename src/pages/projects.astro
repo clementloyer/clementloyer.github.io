@@ -1,15 +1,85 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+
+// Ajoute simplement un nouvel objet ici pour ajouter un élément à la galerie
+const projects = [
+  {
+    title: "Anniviers",
+    subtitle: "Landscape photography",
+    type: "image",
+    media: "/images/home/anniviers.jpeg",
+    link: "/projects/anniviers",
+  },
+  {
+    title: "Grand Cornier",
+    subtitle: "Mountain series",
+    type: "image",
+    media: "/images/home/grand_cornier.jpeg",
+    link: "/projects/grand-cornier",
+  },
+
+  {
+    title: "Mon nouveau projet",
+    subtitle: "Une description",
+    type: "video",
+    autoplay: false,
+    loop: true,
+    previewTime: 23.8,
+    media: "/videos/spacecraft/exosphere.renders.mp4",
+    link: "/projects/mon-projet",
+  },
+  // {
+  //   title: "Nouveau projet",
+  //   subtitle: "Description courte",
+  //   type: "image",
+  //   media: "/images/home/exemple.jpeg",
+  //   link: "/projects/nouveau-projet",
+  // },
+];
 ---
 
 <MainLayout title="Projects">
-  <h2>Projects</h2>
-
-  <div class="projects-grid">
-    <div class="project-card">
-      <img src="/projects/project1.jpg" alt="Project 1" />
-      <h3>Project Title</h3>
-      <p>Short description.</p>
-    </div>
+  <div class="gallery">
+    {
+      projects.map((project) => (
+        <a href={project.link} class="gallery-item">
+          <div class="gallery-image-wrapper">
+            {project.type === "video" ? (
+              <video
+                class="gallery-image"
+                src={project.media}
+                autoplay={project.autoplay}
+                loop={project.loop}
+                muted
+                playsinline
+                data-hover-play={!project.autoplay}
+                data-preview-time={project.previewTime ?? 0}
+              />
+            ) : (
+              <img src={project.media} alt={project.title} class="gallery-image" />
+            )}
+          </div>
+          <div class="gallery-caption">
+            <h3 class="gallery-title">{project.title}</h3>
+            <p class="gallery-subtitle">{project.subtitle}</p>
+          </div>
+        </a>
+      ))
+    }
   </div>
 </MainLayout>
+
+<!-- Script for video play at hover -->
+<script>
+  document.querySelectorAll<HTMLVideoElement>('video[data-hover-play="true"]').forEach((video) => {
+    const previewTime = Number(video.dataset.previewTime) || 0;
+
+    video.addEventListener("loadedmetadata", () => {
+      video.currentTime = previewTime;
+    });
+
+    const item = video.closest(".gallery-item");
+    item?.addEventListener("mouseenter", () => video.play());
+    item?.addEventListener("mouseleave", () => video.pause());
+  });
+</script>
