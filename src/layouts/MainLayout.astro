@@ -12,19 +12,12 @@ const { title = "Portfolio" } = Astro.props;
   </head>
   <body>
     <!-- Logo et menu hamburger en position fixed -->
-    <div class="logo-fixed">CLEMENT LOYER</div>
+    <a href="/" class="logo-fixed">CLEMENT LOYER</a>
 
-    <button class="menu-toggle-fixed" aria-label="Open menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-
-    <!-- Menu de navigation (overlay) -->
-    <nav class="dropdown-menu">
-      <a href="/">Home</a>
-      <a href="/projects">Projects</a>
-      <a href="/contact">Contact</a>
+    <nav class="nav-fixed">
+      <a href="/projects">PROJECTS</a>
+      <a href="/experience">EXPERIENCE</a>
+      <a href="/contact">CONTACT</a>
     </nav>
 
     <!-- Contenu de la page -->
@@ -33,13 +26,3 @@ const { title = "Portfolio" } = Astro.props;
     </main>
   </body>
 </html>
-
-<script>
-  const toggle = document.querySelector(".menu-toggle-fixed");
-  const menu = document.querySelector(".dropdown-menu");
-
-  toggle?.addEventListener("click", () => {
-    menu?.classList.toggle("open");
-    toggle?.classList.toggle("active");
-  });
-</script>
